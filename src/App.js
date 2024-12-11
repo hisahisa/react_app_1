@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./pages/Layout";
+import { lazy } from "react";
 
-function App() {
+const IndexPage = lazy(() => import("./pages/IndexPage"));
+const UsersPage = lazy(() => import("./pages/UsersPage"));
+const ItemsPage = lazy(() => import("./pages/ItemsPage"));
+
+const theme = createTheme();
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<IndexPage />} />
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/items" element={<ItemsPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Box>
+    </ThemeProvider>
   );
 }
-
-export default App;
